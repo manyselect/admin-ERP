@@ -19,7 +19,8 @@
       :pagination="ipagination"
       :loading="loading"
       :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange, type: getType}"
-      :customRow="rowAction">
+      :customRow="rowAction"
+      @change="handleTableChange">
     </a-table>
     <!-- table区域-end -->
   </a-modal>
@@ -42,9 +43,9 @@
         queryParam: {
           number: "",
           searchMaterial: "",
-          type: "其它",
+          type: "",
           subType: "",
-          status: "1"
+          status: ""
         },
         // 表头
         columns: [
@@ -84,8 +85,10 @@
     created() {
     },
     methods: {
-      show(subType, organType) {
+      show(type, subType, organType, status) {
+        this.queryParam.type = type
         this.queryParam.subType = subType
+        this.queryParam.status = status
         this.columns[1].title = organType
         this.model = Object.assign({}, {});
         this.visible = true;

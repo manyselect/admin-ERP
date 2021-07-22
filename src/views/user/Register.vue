@@ -65,12 +65,6 @@
       </a-form-item>
 
       <div class="login-copyright">
-        <a-row>
-          <a-col>
-            © 2015-2030 {{systemTitle}} - Powered By
-            <a style="color:#00458a;" href="http://www.huaxiaerp.com/" target="_blank">官方网站</a>
-          </a-col>
-        </a-row>
       </div>
     </a-form>
   </div>
@@ -78,7 +72,6 @@
 
 <script>
   import {mixinDevice} from '@/utils/mixin.js'
-  import {getSmsCaptcha} from '@/api/login'
   import {getAction, postAction} from '@/api/manage'
   import {checkOnlyUser} from '@/api/api'
 
@@ -107,6 +100,7 @@
     data() {
       return {
         systemTitle: window.SYS_TITLE,
+        systemUrl: window.SYS_URL,
         form: null,
         randCode:'',
         randCodeImage:'',

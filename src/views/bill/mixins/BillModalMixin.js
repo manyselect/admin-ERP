@@ -37,12 +37,6 @@ export const BillModalMixin = {
     };
   },
   created () {
-    this.initSupplier()
-    this.initCustomer()
-    this.initRetail()
-    this.initSalesman()
-    this.initDepot()
-    this.initAccount()
   },
   computed: {
     readOnly: function() {
@@ -112,13 +106,14 @@ export const BillModalMixin = {
       getAction('/depot/findDepotByCurrentUser').then((res) => {
         if(res.code === 200){
           let arr = res.data
-          for(let i=0; i<arr.length; i++) {
-            let depotInfo = {};
-            depotInfo.value = arr[i].id+'' //注意-此处value必须为字符串格式
-            depotInfo.text = arr[i].depotName
-            depotInfo.title = arr[i].depotName
-            for(let item of that.materialTable.columns){
-              if(item.key == 'depotId' || item.key == 'anotherDepotId') {
+          for(let item of that.materialTable.columns){
+            if(item.key == 'depotId' || item.key == 'anotherDepotId') {
+              item.options = []
+              for(let i=0; i<arr.length; i++) {
+                let depotInfo = {};
+                depotInfo.value = arr[i].id + '' //注意-此处value必须为字符串格式
+                depotInfo.text = arr[i].depotName
+                depotInfo.title = arr[i].depotName
                 item.options.push(depotInfo)
               }
             }
@@ -149,6 +144,16 @@ export const BillModalMixin = {
         this.accountMoneyList = []
         this.manyAccountBtnStatus = false
       }
+    },
+    manyAccountModalFormOk(idList, moneyList, allPrice) {
+      this.accountIdList = idList
+      this.accountMoneyList = moneyList
+      let discountLastMoney = this.form.getFieldValue('discountLastMoney')-0
+      let otherMoney = this.form.getFieldValue('otherMoney')-0
+      let debt = (discountLastMoney + otherMoney - allPrice).toFixed(2)
+      this.$nextTick(() => {
+        this.form.setFieldsValue({'changeAmount':allPrice, 'debt':debt})
+      });
     },
     onAdded(event) {
       const { row, target } = event

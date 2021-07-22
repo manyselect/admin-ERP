@@ -9,13 +9,13 @@ function resolve(dir) {
 module.exports = {
   // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   productionSourceMap: false,
-  configureWebpack: config => {
+  configureWebpack: (config) => {
     // 生产环境取消 console.log
     if (process.env.NODE_ENV === 'production') {
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
     }
   },
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     config.resolve.alias
       .set('@$', resolve('src'))
       .set('@api', resolve('src/api'))
@@ -28,7 +28,7 @@ module.exports = {
         new CompressionPlugin({
           test: /\.(js|css|less)$/, // 匹配文件名
           threshold: 10240, // 对超过10k的数据压缩
-          deleteOriginalAssets: false // 删除源文件
+          deleteOriginalAssets: false, // 删除源文件
         })
       )
     }
@@ -40,11 +40,11 @@ module.exports = {
           /* less 变量覆盖，用于自定义 ant design 主题 */
           'primary-color': '#1890FF',
           'link-color': '#1890FF',
-          'border-radius-base': '4px'
+          'border-radius-base': '4px',
         },
-        javascriptEnabled: true
-      }
-    }
+        javascriptEnabled: true,
+      },
+    },
   },
   devServer: {
     port: 3000,
@@ -52,9 +52,9 @@ module.exports = {
       '/jshERP-boot': {
         target: 'http://39.105.172.133:9999', // 请求本地 需要jshERP-boot后台项目
         ws: false,
-        changeOrigin: true
-      }
-    }
+        changeOrigin: true,
+      },
+    },
   },
-  lintOnSave: undefined
+  lintOnSave: undefined,
 }
