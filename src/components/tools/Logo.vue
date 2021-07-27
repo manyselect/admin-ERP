@@ -45,7 +45,7 @@
       transition: background 300ms;
       background: #002140;
       h1 {
-        font-size: 24px;
+        font-size: 22px;
         color: #ffffff;
       }
       a {

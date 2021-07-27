@@ -197,7 +197,11 @@
               return needInMoney? needInMoney.toFixed(2):''
             }
           },
-          { title: '付款', dataIndex: 'changeAmount',width:60},
+          { title: '付款', dataIndex: 'changeAmount',width:60,
+          // customCell: (record, rowIndex) => {		//在此处可以修改单元格中的样式
+          //   return { style: { 'color': 'red', '-webkit-line-clamp': 2, } }    //return 想要设置的样式
+          //   },
+          },
           { title: '欠款', dataIndex: 'debt',width:60,
             customRender:function (text,record,index) {
               let debt = record.discountLastMoney + record.otherMoney - record.changeAmount
